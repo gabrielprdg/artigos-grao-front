@@ -1,5 +1,6 @@
 import TopBar from '../components/TopBar';
 import articlesData from '../../services/articles.json';
+import { Link } from 'react-router-dom';
 
 const HomePage = () => {
 
@@ -12,12 +13,14 @@ const HomePage = () => {
             <h1 className="text-4xl font-bold text-gray-900">
               Todos os artigos
             </h1>
-            <button 
-              className="px-4 py-2 text-white rounded-2xl hover:opacity-90 transition-opacity duration-200 font-medium"
-              style={{ backgroundColor: '#67A22d' }}
-            >
-              Criar artigo
-            </button>
+            <Link to="/create" className="text-gray-600 hover:text-gray-900 transition-colors">
+               <button 
+                className="px-4 py-2 text-white rounded-2xl hover:opacity-90 transition-opacity duration-200 font-medium"
+                style={{ backgroundColor: '#67A22d' }}
+              >
+                Criar artigo
+              </button>
+            </Link>
           </div>
           <div className="mb-8">
             <div className="flex gap-3 mb-4">
