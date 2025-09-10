@@ -20,6 +20,23 @@ const HomePage = () => {
             </button>
           </div>
           <div className="mb-8">
+            <div className="flex gap-3 mb-4">
+              <button className="px-4 py-2 text-sm text-gray-700 rounded-xl hover:opacity-80 transition-opacity" style={{ backgroundColor: '#edf2e8' }}>
+                Grão Direto
+              </button>
+              <button className="px-4 py-2 text-sm text-gray-700 rounded-xl hover:opacity-80 transition-opacity" style={{ backgroundColor: '#edf2e8' }}>
+                tecnologia
+              </button>
+              <button className="px-4 py-2 text-sm text-gray-700 rounded-xl hover:opacity-80 transition-opacity" style={{ backgroundColor: '#edf2e8' }}>
+                agronegócio
+              </button>
+              <button className="px-4 py-2 text-sm text-gray-700 rounded-xl hover:opacity-80 transition-opacity" style={{ backgroundColor: '#edf2e8' }}>
+                DevOps
+              </button>
+              <button className="px-4 py-2 text-sm text-gray-700 rounded-xl hover:opacity-80 transition-opacity" style={{ backgroundColor: '#edf2e8' }}>
+                React
+              </button>
+            </div>
             <input
               type="text"
               placeholder="Buscar artigos..."
