@@ -1,6 +1,7 @@
 import TopBar from '../components/TopBar';
 import articlesData from '../../services/articles.json';
 import { Link } from 'react-router-dom';
+import { PencilSquareIcon } from '@heroicons/react/24/outline';
 
 const HomePage = () => {
 
@@ -56,22 +57,36 @@ const HomePage = () => {
                 className="bg-white rounded-lg overflow-hidden"
               >
                 <div className="p-4">
-                  <h2 className="text-xl font-semibold text-gray-900 mb-2 line-clamp-2">
-                    {article.title}
-                  </h2>
-                  <p className="text-gray-700 mb-3 truncate">
-                    {article.content}
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 text-gray-700 text-xs rounded-full" style={{ backgroundColor: '#edf2e8' }}>
-                      {article.tag1}
-                    </span>
-                    <span className="px-3 py-1 text-gray-700 text-xs rounded-full" style={{ backgroundColor: '#edf2e8' }}>
-                      {article.tag2}
-                    </span>
-                    <span className="px-3 py-1 text-gray-700 text-xs rounded-full" style={{ backgroundColor: '#edf2e8' }}>
-                      {article.tag3}
-                    </span>
+                  <div className="flex justify-between items-center gap-4">
+                    <div className="flex-1 min-w-0">
+                      <h2 className="text-xl font-semibold text-gray-900 mb-2 line-clamp-2">
+                        {article.title}
+                      </h2>
+                      <p className="text-gray-700 mb-3 truncate">
+                        {article.content}
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        <span className="px-3 py-1 text-gray-700 text-xs rounded-full" style={{ backgroundColor: '#edf2e8' }}>
+                          {article.tag1}
+                        </span>
+                        <span className="px-3 py-1 text-gray-700 text-xs rounded-full" style={{ backgroundColor: '#edf2e8' }}>
+                          {article.tag2}
+                        </span>
+                        <span className="px-3 py-1 text-gray-700 text-xs rounded-full" style={{ backgroundColor: '#edf2e8' }}>
+                          {article.tag3}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex-shrink-0">
+                      <Link to="/edit/article/1">
+                        <button 
+                          className="text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors grid place-items-center"
+                          title="Editar artigo"
+                        >
+                          <PencilSquareIcon className="h-6 w-6" />
+                        </button>
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </article>
