@@ -52,10 +52,10 @@ const HomePage = () => {
           {/* Articles List */}
           <div className="space-y-6">
             {articlesData.map((article) => (
-              <article
-                key={article.id}
-                className="bg-white rounded-lg overflow-hidden"
-              >
+              <Link key={article.id} to={`/article/${article.id}`} className="block">
+                <article
+                  className="bg-white rounded-lg overflow-hidden cursor-pointer"
+                >
                 <div className="p-4">
                   <div className="flex justify-between items-center gap-4">
                     <div className="flex-1 min-w-0">
@@ -90,6 +90,7 @@ const HomePage = () => {
                   </div>
                 </div>
               </article>
+              </Link>
             ))}
           </div>
 
