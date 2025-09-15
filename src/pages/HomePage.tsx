@@ -1,9 +1,62 @@
 import TopBar from '../components/TopBar';
-import articlesData from '../../services/articles.json';
+import { api } from '../../services/api';
 import { Link } from 'react-router-dom';
 import { PencilSquareIcon } from '@heroicons/react/24/outline';
+import { useEffect, useState } from 'react';
+
+interface Article {
+  id: number;
+  title: string;
+  content: string;
+  tags: string[];
+  author: string;
+}
 
 const HomePage = () => {
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        const response = await api.get('/article');
+        setArticles(response.data);
+        setFilteredArticles(response.data);
+      } catch (error) {
+        console.error('Error fetching articles:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchArticles();
+  }, []);
+
+  useEffect(() => {
+    if (!searchTerm.trim()) {
+      setFilteredArticles(articles);
+    } else {
+      const filtered = articles.filter(article =>
+        article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        article.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        article.author.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredArticles(filtered);
+    }
+  }, [searchTerm, articles]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <TopBar />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="text-center">Carregando artigos...</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -24,26 +77,28 @@ const HomePage = () => {
             </Link>
           </div>
           <div className="mb-8">
-            <div className="flex gap-3 mb-4">
-              <button className="px-4 py-2 text-sm text-gray-700 rounded-xl hover:opacity-80 transition-opacity" style={{ backgroundColor: '#edf2e8' }}>
+            <div className="flex gap-3 mb-4 overflow-x-auto scrollbar-hide pb-2">
+              <button className="px-4 py-2 text-sm text-gray-700 rounded-xl hover:opacity-80 transition-opacity whitespace-nowrap flex-shrink-0" style={{ backgroundColor: '#edf2e8' }}>
                 Grão Direto
               </button>
-              <button className="px-4 py-2 text-sm text-gray-700 rounded-xl hover:opacity-80 transition-opacity" style={{ backgroundColor: '#edf2e8' }}>
+              <button className="px-4 py-2 text-sm text-gray-700 rounded-xl hover:opacity-80 transition-opacity whitespace-nowrap flex-shrink-0" style={{ backgroundColor: '#edf2e8' }}>
                 tecnologia
               </button>
-              <button className="px-4 py-2 text-sm text-gray-700 rounded-xl hover:opacity-80 transition-opacity" style={{ backgroundColor: '#edf2e8' }}>
+              <button className="px-4 py-2 text-sm text-gray-700 rounded-xl hover:opacity-80 transition-opacity whitespace-nowrap flex-shrink-0" style={{ backgroundColor: '#edf2e8' }}>
                 agronegócio
               </button>
-              <button className="px-4 py-2 text-sm text-gray-700 rounded-xl hover:opacity-80 transition-opacity" style={{ backgroundColor: '#edf2e8' }}>
+              <button className="px-4 py-2 text-sm text-gray-700 rounded-xl hover:opacity-80 transition-opacity whitespace-nowrap flex-shrink-0" style={{ backgroundColor: '#edf2e8' }}>
                 DevOps
               </button>
-              <button className="px-4 py-2 text-sm text-gray-700 rounded-xl hover:opacity-80 transition-opacity" style={{ backgroundColor: '#edf2e8' }}>
+              <button className="px-4 py-2 text-sm text-gray-700 rounded-xl hover:opacity-80 transition-opacity whitespace-nowrap flex-shrink-0" style={{ backgroundColor: '#edf2e8' }}>
                 React
               </button>
             </div>
             <input
               type="text"
               placeholder="Buscar artigos..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full px-6 py-4 text-lg text-gray-700 border border-gray-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
               style={{ backgroundColor: '#edf2e8' }}
             />
@@ -51,7 +106,7 @@ const HomePage = () => {
           
           {/* Articles List */}
           <div className="space-y-6">
-            {articlesData.map((article) => (
+            {filteredArticles.map((article) => (
               <Link key={article.id} to={`/article/${article.id}`} className="block">
                 <article
                   className="bg-white rounded-lg overflow-hidden cursor-pointer"
@@ -66,26 +121,24 @@ const HomePage = () => {
                         {article.content}
                       </p>
                       <div className="flex flex-wrap gap-2">
-                        <span className="px-3 py-1 text-gray-700 text-xs rounded-full" style={{ backgroundColor: '#edf2e8' }}>
-                          {article.tag1}
-                        </span>
-                        <span className="px-3 py-1 text-gray-700 text-xs rounded-full" style={{ backgroundColor: '#edf2e8' }}>
-                          {article.tag2}
-                        </span>
-                        <span className="px-3 py-1 text-gray-700 text-xs rounded-full" style={{ backgroundColor: '#edf2e8' }}>
-                          {article.tag3}
-                        </span>
+                        {article.tags?.map((tag, index) => (
+                          <span key={index} className="px-3 py-1 text-gray-700 text-xs rounded-full" style={{ backgroundColor: '#edf2e8' }}>
+                            {tag}
+                          </span>
+                        ))}
                       </div>
                     </div>
                     <div className="flex-shrink-0">
-                      <Link to="/edit/article/1">
-                        <button 
-                          className="text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors grid place-items-center"
-                          title="Editar artigo"
-                        >
-                          <PencilSquareIcon className="h-6 w-6" />
-                        </button>
-                      </Link>
+                      <button
+                        className="text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors grid place-items-center"
+                        title="Editar artigo"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          window.location.href = `/edit/article/${article.id}`;
+                        }}
+                      >
+                        <PencilSquareIcon className="h-6 w-6" />
+                      </button>
                     </div>
                   </div>
                 </div>

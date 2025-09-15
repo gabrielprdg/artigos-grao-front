@@ -1,17 +1,86 @@
+import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import TopBar from '../components/TopBar';
-import articlesData from '../../services/articles.json';
-import { Link, useParams } from 'react-router-dom';
+import { api } from '../../services/api';
+
+interface Article {
+  id: string;
+  title: string;
+  content: string;
+  author: string;
+  tag1: string;
+}
 
 const ArticleDetails = () => {
   const { id } = useParams();
-  const article = articlesData.find(article => article.id === parseInt(id || '0'));
+  const [article, setArticle] = useState<Article | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    const fetchArticle = async () => {
+      if (!id) return;
+
+      try {
+        setLoading(true);
+        const response = await api.get(`/article/${id}`);
+        setArticle(response.data);
+      } catch (err) {
+        setError('Failed to load article');
+        console.error('Error fetching article:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchArticle();
+  }, [id]);
+  
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <TopBar />
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="flex justify-center items-center h-64">
+            <p className="text-lg text-gray-600">Carregando artigo...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <TopBar />
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="flex justify-center items-center h-64">
+            <p className="text-lg text-red-600">{error}</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!article) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <TopBar />
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="flex justify-center items-center h-64">
+            <p className="text-lg text-gray-600">Artigo não encontrado</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
       <TopBar />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-       
+
         <article className="overflow-hidden">
           <div className="p-8">
             <div className="flex">
