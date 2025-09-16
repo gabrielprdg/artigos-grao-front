@@ -10,6 +10,7 @@ interface Article {
   content: string;
   tags: string[];
   author: string;
+  url?: string;
 }
 
 const HomePage = () => {
@@ -133,15 +134,24 @@ const HomePage = () => {
             {filteredArticles.map((article) => (
               <Link key={article.id} to={`/article/${article.id}`} className="block">
                 <article
-                  className="bg-white rounded-lg overflow-hidden cursor-pointer"
+                  className="bg-gray-50 rounded-lg overflow-hidden cursor-pointer"
                 >
-                <div className="p-4">
+                <div className="p-3">
                   <div className="flex justify-between items-center gap-4">
+                    {article.url && (
+                      <div className="flex-shrink-0">
+                        <img
+                          src={article.url}
+                          alt={article.title}
+                          className="w-20 h-20 object-cover rounded-lg"
+                        />
+                      </div>
+                    )}
                     <div className="flex-1 min-w-0">
-                      <h2 className="text-xl font-semibold text-gray-900 mb-2 line-clamp-2">
+                      <h2 className="text-lg font-semibold text-gray-900 mb-1 line-clamp-2">
                         {article.title}
                       </h2>
-                      <p className="text-gray-700 mb-3 truncate">
+                      <p className="text-gray-700 mb-2 truncate">
                         {article.content}
                       </p>
                       <div className="flex flex-wrap gap-2">

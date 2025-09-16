@@ -38,7 +38,8 @@ const CreateArticle = () => {
         title: title.trim(),
         content: content.trim(),
         tags: selectedTags,
-        author: 'Gabriel Rodrigues'
+        author: 'Gabriel Rodrigues',
+        ...(imageUrl.trim() && { url: imageUrl.trim() })
       };
 
       await api.post('/article', articleData);

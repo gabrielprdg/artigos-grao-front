@@ -1,69 +1,87 @@
-# React + TypeScript + Vite
+# Artigos Grão - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Uma aplicação React TypeScript para gerenciar e exibir artigos, construída com Vite e estilizada com Tailwind CSS.
 
-Currently, two official plugins are available:
+## Funcionalidades
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 📝 Criação e edição de artigos
+- 🏠 Página inicial com listagem de artigos
+- 📖 Visualização de detalhes do artigo
+- 🏷️ Filtragem por tags
+- 📱 Design responsivo para dispositivos móveis
+- 🎨 Interface moderna com Tailwind CSS
 
-## Expanding the ESLint configuration
+## Stack Tecnológica
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **React** 19.1.1 - Biblioteca de interface
+- **TypeScript** - Tipagem estática
+- **Vite** - Ferramenta de build e servidor de desenvolvimento
+- **Tailwind CSS** - Estilização
+- **React Router DOM** - Navegação
+- **Axios** - Cliente HTTP
+- **Prisma Client** - ORM para banco de dados
+- **Heroicons** - Biblioteca de ícones
+- **React Toastify** - Notificações toast
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Pré-requisitos
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+- Node.js (versão 18 ou superior)
+- npm ou yarn como gerenciador de pacotes
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Instalação
+
+1. Clone o repositório:
+```bash
+git clone <url-do-repositorio>
+cd artigos-grao-front
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+2. Instale as dependências:
+```bash
+npm install
 ```
+
+## Scripts Disponíveis
+
+### Desenvolvimento
+```bash
+npm run dev
+```
+Inicia o servidor de desenvolvimento em `http://localhost:5173` com hot module replacement.
+
+### Build
+```bash
+npm run build
+```
+Constrói a aplicação para produção. Os arquivos serão gerados na pasta `dist`.
+
+### Preview
+```bash
+npm run preview
+```
+Serve a build de produção localmente para testes.
+
+
+
+## Build para Produção
+
+1. Execute o comando de build:
+```bash
+npm run build
+```
+
+2. Os arquivos construídos estarão no diretório `dist`
+3. Faça o deploy do conteúdo de `dist` para sua plataforma de hospedagem
+
+## Como Contribuir
+
+1. Faça um fork do repositório
+2. Crie uma branch para sua funcionalidade
+3. Faça suas alterações
+4. Execute o linting: `npm run lint`
+5. Construa e teste: `npm run build`
+6. Submeta um pull request
+
+## Licença
+
+Este projeto é privado e não está licenciado para uso público.
