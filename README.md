@@ -62,26 +62,6 @@ npm run preview
 Serve a build de produção localmente para testes.
 
 
-
-## Build para Produção
-
-1. Execute o comando de build:
-```bash
-npm run build
-```
-
-2. Os arquivos construídos estarão no diretório `dist`
-3. Faça o deploy do conteúdo de `dist` para sua plataforma de hospedagem
-
-## Como Contribuir
-
-1. Faça um fork do repositório
-2. Crie uma branch para sua funcionalidade
-3. Faça suas alterações
-4. Execute o linting: `npm run lint`
-5. Construa e teste: `npm run build`
-6. Submeta um pull request
-
 ## Licença
 
 Este projeto é privado e não está licenciado para uso público.
