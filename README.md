@@ -41,6 +41,13 @@ cd artigos-grao-front
 npm install
 ```
 
+3. Configure as variáveis de ambiente:
+```bash
+# Crie um arquivo .env na raiz do projeto
+VITE_PORT=3000
+```
+**Nota**: Substitua `3000` pela porta onde sua API está rodando.
+
 ## Scripts Disponíveis
 
 ### Desenvolvimento
