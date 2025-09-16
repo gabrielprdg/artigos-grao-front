@@ -4,11 +4,11 @@ import TopBar from '../components/TopBar';
 import { api } from '../../services/api';
 
 interface Article {
-  id: string;
+  id: number;
   title: string;
   content: string;
   author: string;
-  tag1: string;
+  tags: string[];
 }
 
 const ArticleDetails = () => {
@@ -89,9 +89,11 @@ const ArticleDetails = () => {
               </h1>
 
               <div className="flex flex-wrap gap-2 mb-6 items-center">
-                <span className="px-3 py-1 text-gray-700 text-sm rounded-full" style={{ backgroundColor: '#edf2e8' }}>
-                  {article?.tag1}
-                </span>
+                {article?.tags?.map((tag, index) => (
+                  <span key={index} className="px-3 py-1 text-gray-700 text-sm rounded-full" style={{ backgroundColor: '#edf2e8' }}>
+                    {tag}
+                  </span>
+                ))}
               </div>
             </div>
 

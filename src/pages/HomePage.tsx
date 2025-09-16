@@ -16,6 +16,7 @@ const HomePage = () => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedTag, setSelectedTag] = useState<string>('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -35,17 +36,39 @@ const HomePage = () => {
   }, []);
 
   useEffect(() => {
-    if (!searchTerm.trim()) {
-      setFilteredArticles(articles);
-    } else {
-      const filtered = articles.filter(article =>
+    let filtered = articles;
+
+    // Filter by search term
+    if (searchTerm.trim()) {
+      filtered = filtered.filter(article =>
         article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         article.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
         article.author.toLowerCase().includes(searchTerm.toLowerCase())
       );
-      setFilteredArticles(filtered);
     }
-  }, [searchTerm, articles]);
+
+    // Filter by selected tag
+    if (selectedTag) {
+      filtered = filtered.filter(article =>
+        article.tags?.includes(selectedTag)
+      );
+    }
+
+    setFilteredArticles(filtered);
+  }, [searchTerm, selectedTag, articles]);
+
+  // Extract all unique tags from articles
+  const getAllTags = () => {
+    const tagSet = new Set<string>();
+    articles.forEach(article => {
+      article.tags?.forEach(tag => tagSet.add(tag));
+    });
+    return Array.from(tagSet).sort();
+  };
+
+  const handleTagClick = (tag: string) => {
+    setSelectedTag(selectedTag === tag ? '' : tag);
+  };
 
   if (loading) {
     return (
@@ -78,21 +101,22 @@ const HomePage = () => {
           </div>
           <div className="mb-8">
             <div className="flex gap-3 mb-4 overflow-x-auto scrollbar-hide pb-2">
-              <button className="px-4 py-2 text-sm text-gray-700 rounded-xl hover:opacity-80 transition-opacity whitespace-nowrap flex-shrink-0" style={{ backgroundColor: '#edf2e8' }}>
-                Grão Direto
-              </button>
-              <button className="px-4 py-2 text-sm text-gray-700 rounded-xl hover:opacity-80 transition-opacity whitespace-nowrap flex-shrink-0" style={{ backgroundColor: '#edf2e8' }}>
-                tecnologia
-              </button>
-              <button className="px-4 py-2 text-sm text-gray-700 rounded-xl hover:opacity-80 transition-opacity whitespace-nowrap flex-shrink-0" style={{ backgroundColor: '#edf2e8' }}>
-                agronegócio
-              </button>
-              <button className="px-4 py-2 text-sm text-gray-700 rounded-xl hover:opacity-80 transition-opacity whitespace-nowrap flex-shrink-0" style={{ backgroundColor: '#edf2e8' }}>
-                DevOps
-              </button>
-              <button className="px-4 py-2 text-sm text-gray-700 rounded-xl hover:opacity-80 transition-opacity whitespace-nowrap flex-shrink-0" style={{ backgroundColor: '#edf2e8' }}>
-                React
-              </button>
+              {getAllTags().map((tag) => (
+                <button
+                  key={tag}
+                  onClick={() => handleTagClick(tag)}
+                  className={`px-4 py-2 text-sm rounded-xl hover:opacity-80 transition-opacity whitespace-nowrap flex-shrink-0 ${
+                    selectedTag === tag
+                      ? 'text-white'
+                      : 'text-gray-700'
+                  }`}
+                  style={{
+                    backgroundColor: selectedTag === tag ? '#67A22d' : '#edf2e8'
+                  }}
+                >
+                  {tag}
+                </button>
+              ))}
             </div>
             <input
               type="text"
